@@ -1,0 +1,183 @@
+Program:
+  VarDef x [1.1:1.9] size=4 inits=5
+      --- Code: ---
+        NAME x
+        NAME :0
+        INIT
+      --- Data: ---
+      LABEL x
+        SIZE 4
+      LABEL :0
+        DATA 1
+        DATA 1
+        DATA 1
+        DATA 5
+    Inits:
+      Init 1* [1.9:1.9]
+        AtomExpr INTCONST(5) [1.9:1.9]
+  VarDef y [2.1:2.9] size=4 inits=2
+      --- Code: ---
+        NAME y
+        NAME :1
+        INIT
+      --- Data: ---
+      LABEL y
+        SIZE 4
+      LABEL :1
+        DATA 1
+        DATA 1
+        DATA 1
+        DATA 2
+    Inits:
+      Init 1* [2.9:2.9]
+        AtomExpr INTCONST(2) [2.9:2.9]
+  FunDef main [3.1:9.5] depth=1 parsSize=4 varsSize=8
+      --- Code: ---
+      LABEL main
+        PUSH 0
+        POPN
+        NAME x
+        LOAD
+        PUSH 5
+        OPER.GTH
+        NAME :2
+        NAME :4
+        CJMP
+      LABEL :2
+        PUSH 7
+        NAME y
+        SAVE
+        NAME :3
+        UJMP
+      LABEL :4
+        PUSH 12
+        NAME y
+        SAVE
+      LABEL :3
+        NAME y
+        LOAD
+        PUSH 0
+        RETN
+    Pars:
+    Stmts:
+      IfStmt [4.5:8.7]
+          --- Code: ---
+            NAME x
+            LOAD
+            PUSH 5
+            OPER.GTH
+            NAME :2
+            NAME :4
+            CJMP
+          LABEL :2
+            PUSH 7
+            NAME y
+            SAVE
+            NAME :3
+            UJMP
+          LABEL :4
+            PUSH 12
+            NAME y
+            SAVE
+          LABEL :3
+        BinExpr GTH [4.8:4.12]
+            --- Code: ---
+              NAME x
+              LOAD
+              PUSH 5
+              OPER.GTH
+          NameExpr x [4.8:4.8] def@[1.1:1.9] lval
+              --- Code: ---
+                NAME x
+                LOAD
+          AtomExpr INTCONST(5) [4.12:4.12]
+              --- Code: ---
+                PUSH 5
+        IfThenStmts:
+          AssignStmt [5.9:5.13]
+              --- Code: ---
+                PUSH 7
+                NAME y
+                SAVE
+            NameExpr y [5.9:5.9] def@[2.1:2.9] lval
+                --- Code: ---
+                  NAME y
+                  LOAD
+            AtomExpr INTCONST(7) [5.13:5.13]
+                --- Code: ---
+                  PUSH 7
+        IfElseStmts:
+          AssignStmt [7.9:7.14]
+              --- Code: ---
+                PUSH 12
+                NAME y
+                SAVE
+            NameExpr y [7.9:7.9] def@[2.1:2.9] lval
+                --- Code: ---
+                  NAME y
+                  LOAD
+            AtomExpr INTCONST(12) [7.13:7.14]
+                --- Code: ---
+                  PUSH 12
+      ExprStmt [9.5:9.5]
+        NameExpr y [9.5:9.5] def@[2.1:2.9] lval
+            --- Code: ---
+              NAME y
+              LOAD
+
+CODE SEGMENT:
+       0 [5]   NAME x
+       5 [5]   NAME :0
+      10 [1]   INIT
+      11 [5]   NAME y
+      16 [5]   NAME :1
+      21 [1]   INIT
+      22 [5]   PUSH 0
+      27 [5]   NAME main
+      32 [1]   CALL
+      33 [5]   PUSH 0
+      38 [5]   NAME exit
+      43 [1]   CALL
+      44 [0] LABEL main
+      44 [5]   PUSH 0
+      49 [1]   POPN
+      50 [5]   NAME x
+      55 [1]   LOAD
+      56 [5]   PUSH 5
+      61 [1]   OPER.GTH
+      62 [5]   NAME :2
+      67 [5]   NAME :4
+      72 [1]   CJMP
+      73 [0] LABEL :2
+      73 [5]   PUSH 7
+      78 [5]   NAME y
+      83 [1]   SAVE
+      84 [5]   NAME :3
+      89 [1]   UJMP
+      90 [0] LABEL :4
+      90 [5]   PUSH 12
+      95 [5]   NAME y
+     100 [1]   SAVE
+     101 [0] LABEL :3
+     101 [5]   NAME y
+     106 [1]   LOAD
+     107 [5]   PUSH 0
+     112 [1]   RETN
+
+DATA SEGMENT:
+     113 [0] LABEL x
+     113 [ ]   SIZE 4
+     117 [0] LABEL :0
+     117 [4]   DATA 1
+     121 [4]   DATA 1
+     125 [4]   DATA 1
+     129 [4]   DATA 5
+     133 [0] LABEL y
+     133 [ ]   SIZE 4
+     137 [0] LABEL :1
+     137 [4]   DATA 1
+     141 [4]   DATA 1
+     145 [4]   DATA 1
+     149 [4]   DATA 2
+
+:-) Done.
